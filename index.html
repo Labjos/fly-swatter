@@ -7,13 +7,21 @@
     <title>Document</title>
 </head>
 <body>
-    <div>
+    <div id="bigFrame">
         <canvas id="main-canvas"></canvas>
+        <div id="screenData">
+            <div id="screenBtn">
+                <button id="start-btn" class="btn">START</button>
+                <button id="stop-btn" class="btn">STOP</button>
+                <button id="resume-btn" class="btn">RESUME</button>
+            </div>
+        </div>
     </div>
 
-    
-
     <script src="/assets/js/constants.js"></script>
+    <script src="/assets/js/models/score.js"></script>
+    <script src="/assets/js/models/box.js"></script>
+    <script src="/assets/js/models/fly.js"></script>
     <script src="/assets/js/models/swatter.js"></script>
     <script src="/assets/js/models/game.js"></script>
     <script src="/assets/js/main.js"></script>

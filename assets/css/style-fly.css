@@ -1,5 +1,41 @@
 
+#bigFrame {
+    display: flex;
+    margin: 0;
+    width: 100%;
+    height: auto;
+}
+
 canvas {
     border: 2px solid black;
+}
+
+#screenData {
+    width: 33%;
+    height: auto;
+    background-image: url(/assets/img/lateral-panel.png);
+    background-size: cover;
+    border: 3px solid rgb(250, 155, 2);
+}
+#screenBtn {
+    width: 100%;
+    height: 100px;
+    background-color: rgba(247, 246, 241, 0.634);
+    margin-top: 130%;
+    
+}
+.btn {
+    background-color: rgb(9, 90, 204);
+    padding: 30;
+    color: #fff;
+    font-size: 27px;
+    margin-top: 40px;
+    margin-left: 12%;
+    cursor: pointer;
+    border: 3px solid rgb(250, 155, 2);
+    
+}
+.btn:hover {
     background-color: orange;
+    border: 3px solid #000;
 }
