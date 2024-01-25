@@ -4,7 +4,8 @@ class Fly {
         this.ctx = ctx;
         this.x = x;
         this.y = y;
-        this.vy = SPEED_FLY;
+        this.vy = Math.random() * 5;
+        this.vx = Math.random() * 10; // generate random SPEED
         this.w = 30;
         this.h = 30;
 
@@ -20,6 +21,7 @@ class Fly {
             this.sprite.frameHeigth = Math.ceil((this.sprite.height / this.sprite.verticalFrames));
         }
         this.animationTick = 0;
+        this.moveTick = 0
 
         this.lives = 1;
 
@@ -31,16 +33,13 @@ class Fly {
     }
 
     move() {
-        this.y.random() += this.vy;
+        this.y += this.vy;
+        this.x += this.vx
 
-        setInterval(() => {
-            this.vy = this.vx;
-        })
-
-        
-
-
-
+        if (this.moveTick++ > Math.random() * 100) {
+            this.moveTick = 0
+            this.vx *= -1
+        }
     }
 
     draw() {
@@ -71,7 +70,7 @@ class Fly {
             if (this.sprite.horizontalFrameIndex > this.sprite.horizontalFrames -1) {
                 this.sprite.horizontalFrameIndex = 0;
             }
-    }
+        }
     }
     
     collidesWith(e) {
@@ -83,7 +82,4 @@ class Fly {
         );
     }
 
-    move() {
-        this.y += this.vy;
-    }
 }

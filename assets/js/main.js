@@ -15,22 +15,14 @@ window.addEventListener('load', () => {
 
     const startGameBtn = document.getElementById('start-btn');
     startGameBtn.addEventListener('click', () => {
+        startGameBtn.remove()
         game.start();
     })
-
-    const stopGameBtn = document.getElementById('stop-btn');
-    stopGameBtn.addEventListener('click', () => {
-        game.stop();
-        game.gameOver();
-    });
 
     const resumeGameBtn = document.getElementById('resume-btn');
     resumeGameBtn.addEventListener('click', () => {
         game.stop();
-        alert('pulsa Start para continuar');
     })
-
-
 
     document.addEventListener('keydown',(event) => game.onKeyEvent(event));
     document.addEventListener('keyup', (event) => game.onKeyEvent(event));

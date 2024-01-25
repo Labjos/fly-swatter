@@ -61,8 +61,7 @@ class Box {
         if (this.animateFrames) {
             this.animationTick++;
                     
-            if(this.animationTick >= 10) {
-
+            if(this.animationTick >= 5) {
                 this.animationTick = 0;
                 this.sprite.horizontalFrameIndex++;
                 if (this.sprite.horizontalFrameIndex > this.sprite.horizontalFrames - 1) {

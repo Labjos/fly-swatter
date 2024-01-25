@@ -21,7 +21,7 @@ const FLY_ANIMATION_TICK = 10;
 
 const FLIES_SPAWN_TICK = 100;
 
-const BOX_ANIMATION_TICK = 5;
+const BOX_ANIMATION_TICK = 10;
 
 
 

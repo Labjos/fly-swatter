@@ -13,11 +13,11 @@ class Game {
         this.swatter = new Swatter(this.ctx, SWATTER_X_PADDING,this.canvas.height - SWATTER_GROUND_PADDING, this); 
 
         this.flies = [
-            this.fly = new Fly(this.ctx, 100, 100)
+            new Fly(this.ctx, 100, 100)
         ];
         
         this.addFliesBackoff =  1_000;
-        setTimeout(() =>  this.addFlies(), this.addFliesBackoff);
+        
 
         this.boxes = [];
 
@@ -29,8 +29,9 @@ class Game {
     }
 
     start() {
+        setTimeout(() =>  this.addFlies(), this.addFliesBackoff);
         this.addBoxes();
-        if (!this.drawIntervalId) {
+       if (!this.drawIntervalId) {
         this.drawIntervalId = setInterval(() => {
             this.clear();
             this.move();
@@ -94,11 +95,11 @@ class Game {
     };
 
     addFlies() {
-        //if (!this.drawIntervalId) { 
-            this.flies.push(this.fly = new Fly(this.ctx, Math.floor(Math.random() * this.canvas.width - this.fly.w), 0))
-       // }
-        this.addFliesBackoff = Math.floor(Math.random() * 5 + 1) * 1000
-        setTimeout(() =>  this.addFlies(), this.addFliesBackoff);
+        if (this.drawIntervalId) { 
+            this.flies.push(new Fly(this.ctx, Math.floor(Math.random() * this.canvas.width - 100), 0))
+        }
+        this.addFliesBackoff = Math.floor(Math.random() * 5 + 1) * 1_000;
+        setTimeout(() => this.addFlies(), this.addFliesBackoff);
     }
 
     stop() {
@@ -129,14 +130,23 @@ class Game {
     }
 
     clear() {
-        this.flies = this.flies.filter((fly) => fly.y < CANVAS_H && !fly.isDead()) // sumar fly.decrement() al salir de la pantalla
+        this.flies = this.flies.filter((fly) => {
+            const keepFly = fly.y < CANVAS_H && !fly.isDead()
+
+            if (!keepFly) {
+                this.score.decrement();
+            }
+
+            return keepFly
+        }) // sumar fly.decrement() al salir de la pantalla
         this.boxes = this.boxes.filter((box) => box.isAlive);
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
     }
 
     gameOver() {
         this.stop();
-        this.saveScore(); 
+        this.clear();
+        //this.saveScore(); 
     }
 
     saveScore(name) {
