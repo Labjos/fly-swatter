@@ -1,7 +1,7 @@
 
 class Score {
 
-    constructor(ctx, x, y, points = 0) {
+    constructor(ctx, x, y) {
         this.ctx = ctx;
 
         this.x = x;
@@ -12,12 +12,14 @@ class Score {
         this.points = 0;
     }
 
-    increment(amount = 10) {
+    increment(amount = 15) {
         this.points += amount;
+        
     }
 
     decrement(amount = 5) {
         this.points -= amount;
+        
     }
 
     draw() {

@@ -18,7 +18,6 @@ class Game {
         
         this.addFliesBackoff =  1_000;
         
-
         this.boxes = [];
 
         this.score = new Score(this.ctx, 0, 40);
@@ -31,11 +30,14 @@ class Game {
     start() {
         setTimeout(() =>  this.addFlies(), this.addFliesBackoff);
         this.addBoxes();
-       if (!this.drawIntervalId) {
+        if (!this.drawIntervalId) {
         this.drawIntervalId = setInterval(() => {
             this.clear();
             this.move();
             this.draw();
+            if (this.score.points <= -30) {
+                    this.gameOver()
+            }
         }, this.fps);
         }
     }
@@ -45,7 +47,7 @@ class Game {
             if (fly.collidesWith(this.swatter)) {
                 fly.lives--;
                 if (fly.isDead()) {
-                    this.killFly = true
+                    this.killFly = true;
                     this.score.increment();
                 }
             };
@@ -59,40 +61,33 @@ class Game {
         }
 
         this.boxes.forEach((box) => {
-            if (this.swatter.collidesWith(box)) {
+            if (this.swatter.collidesWith(box) && !box.animateFrames) {
                 box.animateFrames = true;
+                this.score.decrement();
                 box.lives--;
-                
-                if (box.isDead() ) {
-                    this.score.decrement();
-                } 
             }
         })
     }
 
     addBoxes() {
-        this.boxes.push(new Box(this.ctx, 0, 360));
-        this.boxes.push(new Box(this.ctx, 0, 540));
-        this.boxes.push(new Box(this.ctx, 0, 720));
-        this.boxes.push(new Box(this.ctx, this.ctx.canvas.width - 180, 360));
-        this.boxes.push(new Box(this.ctx, this.ctx.canvas.width - 360, 360));
-        this.boxes.push(new Box(this.ctx, this.ctx.canvas.width - 540, 360));
-        this.boxes.push(new Box(this.ctx, this.ctx.canvas.width - 720, 360));
-        this.boxes.push(new Box(this.ctx, this.ctx.canvas.width - 900, 360));
-        this.boxes.push(new Box(this.ctx, this.ctx.canvas.width - 1080, 360));
-        this.boxes.push(new Box(this.ctx, this.ctx.canvas.width - 180, 540));
-        this.boxes.push(new Box(this.ctx, this.ctx.canvas.width - 360, 540));
-        this.boxes.push(new Box(this.ctx, this.ctx.canvas.width - 540, 540));
-        this.boxes.push(new Box(this.ctx, this.ctx.canvas.width - 720, 540));
-        this.boxes.push(new Box(this.ctx, this.ctx.canvas.width - 900, 540));        
-        this.boxes.push(new Box(this.ctx, this.ctx.canvas.width - 1080,540));
-        this.boxes.push(new Box(this.ctx, this.ctx.canvas.width - 180, 720));
-        this.boxes.push(new Box(this.ctx, this.ctx.canvas.width - 360, 720));
-        this.boxes.push(new Box(this.ctx, this.ctx.canvas.width - 540, 720));
-        this.boxes.push(new Box(this.ctx, this.ctx.canvas.width - 720, 720));
-        this.boxes.push(new Box(this.ctx, this.ctx.canvas.width - 900, 720));
-        this.boxes.push(new Box(this.ctx, this.ctx.canvas.width - 1080, 720));  
-    };
+        const horizontalBoxes = 7;
+        const verticalBoxes = 3;
+        let boxX = 0;
+        let boxY = 360;
+
+        for (let i = 0; i < verticalBoxes; i++) {
+            boxX = 0;
+            for (let j = 0; j < horizontalBoxes; j++) {
+                this.boxes.push(new Box(this.ctx, boxX, boxY));
+                boxX += 180;              
+            }
+            boxY += 180;
+        }
+
+       // if (verticalBoxes < 3) {
+            //this.gameOver();
+        //}
+    }
 
     addFlies() {
         if (this.drawIntervalId) { 
@@ -138,16 +133,23 @@ class Game {
             }
 
             return keepFly
-        }) // sumar fly.decrement() al salir de la pantalla
+        })
         this.boxes = this.boxes.filter((box) => box.isAlive);
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
     }
-
+    
     gameOver() {
         this.stop();
-        this.clear();
+
+            this.ctx.save();
+            this.ctx.fillStyle = 'white'
+            this.ctx.font = '50px Arial';
+            this.ctx.fillText('This is a disaster... GAME OVER!!!', 250, 250);
+            this.ctx.restore();
+        }
+        //this.clear();
         //this.saveScore(); 
-    }
+    
 
     saveScore(name) {
         const record = localStorage.getItem(SCORE_KEY) ? JSON.parse(localStorage.getItem(SCORE_KEY)) : {};

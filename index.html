@@ -7,13 +7,21 @@
     <title>Document</title>
 </head>
 <body>
+    <div id="start-panel">
+        <div id="data-gamer">
+            <input id="gamer" type="text" placeholder="INSERTA TU NOMBRE / ALIAS" />
+            <input id="" type="button" />
+        </div>
+        <button id="btn-start">START</button>
+        <button id="btn-rules"><a href="/assets/pages/rules.html">RULES</a></button>
+    </div>
     <div id="bigFrame">
-        <canvas id="main-canvas"></canvas>
-        <div id="screenData">
+        <canvas id="main-canvas" class="hidden"></canvas>
+        <div id="screen-data" class="hidden">
             <div id="screenBtn">
-                <button id="start-btn" class="btn">START</button>
-                <button id="resume-btn" class="btn">PAUSE</button>
-            </div>
+                <button id="btn-resume" class="btn">PAUSE</button>
+                <button id="btn-restart" class="btn">RESTART</button>
+            </div> 
         </div>
     </div>
 

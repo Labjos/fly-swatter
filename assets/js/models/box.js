@@ -44,7 +44,7 @@ class Box {
     }
 
     isDead() {
-        return this.isAlive
+        return !this.isAlive
     }
 
     collidesWith(e) {
@@ -56,7 +56,7 @@ class Box {
             this.y < e.y +e.h
         );
     }
-
+º
     animate() {
         if (this.animateFrames) {
             this.animationTick++;

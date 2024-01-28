@@ -81,5 +81,4 @@ class Fly {
             this.y < e.y +e.h
         );
     }
-
 }
