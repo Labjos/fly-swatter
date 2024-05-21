@@ -24,22 +24,24 @@ class Box {
             this.sprite.frameWidth = Math.ceil((this.sprite.width / this.sprite.horizontalFrames));
             this.sprite.frameHeigth = Math.ceil((this.sprite.height / this.sprite.verticalFrames));
         }
+
+        this.soundBox = new Audio('/assets/sound/06bc7eb3d884a49efaf5672d96c6-orig.mp3')
     }
 
     draw() {
         if (this.sprite.isReady) {
             this.animate();
-        this.ctx.drawImage(
-            this.sprite,
-            this.sprite.horizontalFrameIndex * this.sprite.frameWidth,
-            this.sprite.verticalFrameIndex * this.sprite.frameHeigth,
-            this.sprite.frameWidth,
-            this.sprite.frameHeigth,
-            this.x,
-            this.y,
-            this.w,
-            this.h
-        )
+            this.ctx.drawImage(
+                this.sprite,
+                this.sprite.horizontalFrameIndex * this.sprite.frameWidth,
+                this.sprite.verticalFrameIndex * this.sprite.frameHeigth,
+                this.sprite.frameWidth,
+                this.sprite.frameHeigth,
+                this.x,
+                this.y,
+                this.w,
+                this.h
+            )
         }
     }
 

@@ -26,6 +26,8 @@ class Fly {
         this.lives = 1;
 
         setInterval(() => {}, 3_000)
+
+        this.sound = new Audio('/assets/sound/fc085589eb4560baba8581080e03-orig.wav')
     }
 
     isDead() {

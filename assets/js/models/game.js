@@ -17,10 +17,23 @@ class Game {
         ];
         
         this.addFliesBackoff =  1_000;
+        this.addFliesGoldenBackoff =  20_000;
+        this.addFliesSpeedBackoff =  10_000;
+        this.addFliesTseBackoff =  10_000;
+        this.addFliesBlackBackoff =  10_000;
         
         this.boxes = [];
 
         this.score = new Score(this.ctx, 0, 40);
+
+        this.isAlreadyPlay = false;
+
+        this.player = '';
+
+        this.sound = new Audio('/assets/sound/fc085589eb4560baba8581080e03-orig.wav')
+        this.soundBox = new Audio('/assets/sound/06bc7eb3d884a49efaf5672d96c6-orig.mp3')
+
+
     }
     
     onKeyEvent(event) {
@@ -29,18 +42,23 @@ class Game {
 
     start() {
         setTimeout(() =>  this.addFlies(), this.addFliesBackoff);
-        this.addBoxes();
+        if (!this.isAlreadyPlay) {
+            this.addBoxes();
+            this.isAlreadyPlay = true
+        }
         if (!this.drawIntervalId) {
         this.drawIntervalId = setInterval(() => {
             this.clear();
             this.move();
             this.draw();
-            if (this.score.points <= -30) {
-                    this.gameOver()
+
+            if (this.score.points <= -100) {
+                this.gameOver()
             }
         }, this.fps);
         }
     }
+
 
     checkCollisions() { 
         this.flies.forEach((fly) => {
@@ -62,11 +80,19 @@ class Game {
 
         this.boxes.forEach((box) => {
             if (this.swatter.collidesWith(box) && !box.animateFrames) {
+                const remainBoxes = this.boxes.filter(rBox => rBox.y === box.y).length;
+                if (remainBoxes === 1) {
+                    this.gameOver();
+                }
                 box.animateFrames = true;
                 this.score.decrement();
                 box.lives--;
             }
         })
+
+
+
+        this.sound.play();
     }
 
     addBoxes() {
@@ -84,17 +110,38 @@ class Game {
             boxY += 180;
         }
 
-       // if (verticalBoxes < 3) {
-            //this.gameOver();
-        //}
     }
 
     addFlies() {
         if (this.drawIntervalId) { 
-            this.flies.push(new Fly(this.ctx, Math.floor(Math.random() * this.canvas.width - 100), 0))
+            this.flies.push(new Fly(this.ctx, Math.floor(Math.random() * this.canvas.width - 100), 0));
         }
-        this.addFliesBackoff = Math.floor(Math.random() * 5 + 1) * 1_000;
+        this.addFliesBackoff = Math.floor(Math.random() * 5 + 1) * 1000;
         setTimeout(() => this.addFlies(), this.addFliesBackoff);
+
+        if (this.drawIntervalId) {
+            this.flies.push(new Flygolden(this.ctx, Math.floor(Math.random() * this.canvas.width -100), 0));
+        }
+        this.addFliesGoldenBackoff = Math.floor(Math.random() * 20 + 1) * 100_000;
+        setTimeout(() => this.addFlies(), this.addFliesGoldenBackoff);
+
+        if (this.drawIntervalId) {
+            this.flies.push(new Flyblack(this.ctx, Math.floor(Math.random() * this.canvas.width -100), 0));
+        }
+        this.addFliesBlackBackoff = Math.floor(Math.random() * 30 + 1) * 100_000;
+        setTimeout(() => this.addFlies(), this.addFliesBlackBackoff);
+
+        if (this.drawIntervalId) {
+            this.flies.push(new Flytse(this.ctx, Math.floor(Math.random() * this.canvas.width - 100), 0));
+        }
+        this.addFliesTseBackoff = Math.floor(Math.random() * 40 + 1) * 160_000;
+        setTimeout(() => this.addFlies(), this.addFliesTseBackoff);
+
+        if (this.drawIntervalId) {
+            this.flies.push(new Flyspeed(this.ctx, Math.floor(Math.random() * this.canvas.width - 100), 0));
+        }
+        this.addFliesSpeedBackoff = Math.floor(Math.random() * 10 + 1) * 260_000;
+        setTimeout(() => this.addFlies(), this.addFliesSpeedBackoff) 
     }
 
     stop() {
@@ -144,13 +191,10 @@ class Game {
             this.ctx.save();
             this.ctx.fillStyle = 'white'
             this.ctx.font = '50px Arial';
-            this.ctx.fillText('This is a disaster... GAME OVER!!!', 250, 250);
+            this.ctx.fillText(`This is a disaster ${this.player}... GAME OVER!!!`, 250, 250);
             this.ctx.restore();
+            this.soundBox.play();
         }
-        //this.clear();
-        //this.saveScore(); 
-    
-
     saveScore(name) {
         const record = localStorage.getItem(SCORE_KEY) ? JSON.parse(localStorage.getItem(SCORE_KEY)) : {};
         record[name] = this.score.points;

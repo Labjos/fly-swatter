@@ -23,9 +23,9 @@ class Flyblack extends Fly {
         this.animationTick = 0;
         this.moveTick = 0
 
-        this.lives = 3;
+        this.lives = 5;
 
-        setInterval(() => {}, 3_000)
+        setInterval(() => {}, 5_000)
     }
 
 

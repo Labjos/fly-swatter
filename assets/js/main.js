@@ -24,7 +24,6 @@ window.addEventListener('load', () => {
         const screenData = document.getElementById('screen-data');
         screenData.classList.remove('hidden');
 
-        //startGameBtn.remove()
         setTimeout(() => game.start(), 500);
     })
 
@@ -34,16 +33,24 @@ window.addEventListener('load', () => {
     });
     
     const reStartBtn = document.getElementById('btn-restart');
-        reStartBtn.addEventListener('click', () => {
-            game.start();
-
+    reStartBtn.addEventListener('click', () => {
+        game.start();
     });
     
+    const startAgain = document.getElementById('btn-start-again');
+    startAgain.addEventListener('click', () => {
+        location.reload();
+    });
+
+    document.getElementById('gamer').addEventListener('blur', () => {
+        game.player = document.getElementById('gamer').value
+    });
+
+
     document.addEventListener('keydown',(event) => game.onKeyEvent(event));
     document.addEventListener('keyup', (event) => game.onKeyEvent(event));
     document.addEventListener('keyright', (event) => game.onKeyEvent(event));
     document.addEventListener('keyleft', (event) => game.onKeyEvent(event));
     document.addEventListener('keyspace', (event) => game.onKeyEvent(event));
-    });
+});
 
-    //let gamer = document.getElementById('gamer')

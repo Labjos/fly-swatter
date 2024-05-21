@@ -10,7 +10,7 @@ class Flyspeed extends Fly {
         this.h = 30;
 
         this.sprite = new Image();
-        this.sprite.src = '/assets/img/fly-sprite.png';
+        this.sprite.src = '/assets/img/fly-sprite-speed.png';
         this.sprite.verticalFrames = 1;
         this.sprite.verticalFrameIndex = 0;
         this.sprite.horizontalFrames = 4;

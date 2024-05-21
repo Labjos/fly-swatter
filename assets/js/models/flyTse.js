@@ -4,8 +4,8 @@ class Flytse extends Fly {
     constructor(ctx, x, y) {
         super(ctx, x, y);
 
-        this.vy = Math.random() * 5;
-        this.vx = Math.random() * 10;
+        this.vy = Math.random() * 2;
+        this.vx = Math.random() * 5;
         this.w = 30;
         this.h = 30;
 
@@ -25,7 +25,7 @@ class Flytse extends Fly {
 
         this.lives = 2;
 
-        setInterval(() => {}, 3_000)
+        setInterval(() => {}, 6_000)
     }
 
     slow() {
